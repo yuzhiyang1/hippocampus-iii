@@ -33,31 +33,60 @@ const homePath = getRelativeLocaleUrl(locale, "");
     data-home-path={homePath}
     class="app-layout"
   >
-    <section id="hero" class="border-border border-b pt-8 pb-6">
-      <h1 class="my-4 inline-block text-4xl font-bold sm:my-8 sm:text-5xl">
-        Hippocampus III
-      </h1>
-      <a
-        target="_blank"
-        href={getRelativeLocaleUrl(locale, "rss.xml")}
-        class="inline-block"
-        aria-label="RSS Feed"
-        title="RSS Feed"
-      >
-        <IconRss
-          width={20}
-          height={20}
-          class="stroke-accent scale-125 stroke-3 rtl:-rotate-90"
-        />
-        <span class="sr-only">RSS Feed</span>
-      </a>
-
-      <p>
-        这里是我的第三个海马体：用来存放想法、技术笔记、阅读痕迹和那些暂时还没有归类的念头。
-      </p>
-      <p class="mt-2">
-        它会慢慢长成一个外置记忆系统，而不是一个写完就忘的文章列表。
-      </p>
+    <section
+      id="hero"
+      class="border-border grid gap-10 border-b py-14 sm:py-20 lg:grid-cols-[minmax(0,1fr)_16rem] lg:items-end"
+    >
+      <div class="min-w-0">
+        <div
+          class="bg-accent/80 text-accent-foreground mb-10 flex size-36 items-center justify-center rounded-[1.75rem] text-3xl font-semibold sm:size-44"
+          aria-hidden="true"
+        >
+          III
+        </div>
+        <h1
+          class="font-editorial max-w-3xl text-4xl leading-none font-semibold sm:text-6xl lg:text-7xl"
+        >
+          Hippocampus III
+        </h1>
+        <p class="mt-8 max-w-full text-xl leading-8 sm:max-w-2xl">
+          ??????????????????????????????????????????
+        </p>
+        <p
+          class="text-muted-foreground mt-4 max-w-full text-lg leading-8 sm:max-w-2xl"
+        >
+          ??????????????????????????????
+        </p>
+      </div>
+      <aside class="border-border border-t pt-6 text-sm lg:border-t-0 lg:pt-0">
+        <dl class="space-y-5">
+          <div>
+            <dt class="text-muted-foreground">Category</dt>
+            <dd class="decoration-border mt-1 underline underline-offset-4">
+              Notes
+            </dd>
+          </div>
+          <div>
+            <dt class="text-muted-foreground">System</dt>
+            <dd class="mt-1">External memory</dd>
+          </div>
+          <div>
+            <dt class="text-muted-foreground">Feed</dt>
+            <dd class="mt-1">
+              <a
+                target="_blank"
+                href={getRelativeLocaleUrl(locale, "rss.xml")}
+                class="decoration-border hover:text-accent inline-flex items-center gap-2 underline underline-offset-4"
+                aria-label="RSS Feed"
+                title="RSS Feed"
+              >
+                RSS
+                <IconRss class="stroke-accent size-4 stroke-3 rtl:-rotate-90" />
+              </a>
+            </dd>
+          </div>
+        </dl>
+      </aside>
       {
         socials.length > 0 && (
           <div class="mt-4 flex max-sm:flex-col sm:items-center">
@@ -75,11 +104,11 @@ const homePath = getRelativeLocaleUrl(locale, "");
         <section
           id="featured"
           class:list={[
-            "pt-12 pb-6",
+            "py-12 sm:py-16",
             { "border-border border-b": recentPosts.length > 0 },
           ]}
         >
-          <h2 class="text-2xl font-semibold tracking-wide">
+          <h2 class="font-editorial text-3xl font-semibold">
             {t.home.featured}
           </h2>
           <ul>
@@ -93,8 +122,8 @@ const homePath = getRelativeLocaleUrl(locale, "");
 
     {
       recentPosts.length > 0 && (
-        <section id="recent-posts" class="pt-12 pb-6">
-          <h2 class="text-2xl font-semibold tracking-wide">
+        <section id="recent-posts" class="py-12 sm:py-16">
+          <h2 class="font-editorial text-3xl font-semibold">
             {t.home.recentPosts}
           </h2>
           <ul>
@@ -106,8 +135,11 @@ const homePath = getRelativeLocaleUrl(locale, "");
       )
     }
 
-    <div class="my-8 text-center">
-      <LinkButton href={getRelativeLocaleUrl(locale, "posts")}>
+    <div class="border-border my-8 border-t pt-8 text-center">
+      <LinkButton
+        class="decoration-border hover:text-accent underline underline-offset-4"
+        href={getRelativeLocaleUrl(locale, "posts")}
+      >
         {t.home.allPosts}
         <IconArrowRight class="inline-block rtl:-rotate-180" />
       </LinkButton>

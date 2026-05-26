@@ -1,5 +1,6 @@
 ---
 import { type CollectionEntry, getCollection, render } from "astro:content";
+import { getRelativeLocaleUrl } from "astro:i18n";
 import PostLayout from "@/layouts/PostLayout.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
@@ -8,9 +9,7 @@ import Tag from "@/components/Tag.astro";
 import { getPostSlug, getPostUrl } from "@/utils/getPostPaths";
 import { getSortedPosts } from "@/utils/getSortedPosts";
 import { slugifyStr } from "@/utils/slugify";
-import EditPost from "./_components/EditPost.astro";
 import ShareLinks from "./_components/ShareLinks.astro";
-import BackButton from "./_components/BackButton.astro";
 import BackToTopButton from "./_components/BackToTopButton.astro";
 import AdjacentPostNav from "./_components/AdjacentPostNav.astro";
 import config from "@/config";
@@ -67,7 +66,6 @@ const {
   modDatetime,
   timezone,
   tags,
-  hideEditPost,
 } = post.data;
 
 const { Content } = await render(post);
@@ -103,58 +101,88 @@ const ogImage = ogImageUrl
 >
   <Header />
 
-  <BackButton />
-
   <main
     id="main-content"
-    class:list={["app-layout", { "mt-8": !config.features.showBackButton }]}
+    class="mx-auto w-full max-w-6xl px-5 sm:px-8"
     data-pagefind-body
   >
-    <h1
-      style={{ viewTransitionName: slugifyStr(title.replaceAll(".", "-")) }}
-      class="text-accent inline-block text-2xl font-bold sm:text-3xl"
+    <section
+      class="border-border grid gap-10 border-b py-14 sm:py-20 lg:grid-cols-[minmax(0,44rem)_16rem] lg:gap-24"
     >
-      {title}
-    </h1>
+      <div class="min-w-0">
+        <a
+          href={getRelativeLocaleUrl(locale, "posts")}
+          class="text-muted-foreground decoration-border hover:text-accent text-sm underline underline-offset-4"
+        >
+          Blog
+        </a>
+        <h1
+          style={{ viewTransitionName: slugifyStr(title.replaceAll(".", "-")) }}
+          class="font-editorial mt-14 max-w-3xl text-4xl leading-[1.03] font-semibold sm:text-6xl lg:text-7xl"
+        >
+          {title}
+        </h1>
+        <p
+          class="text-muted-foreground mt-8 max-w-full text-xl leading-8 sm:max-w-2xl"
+        >
+          {description}
+        </p>
+      </div>
 
-    <div class="my-2 flex items-center gap-2">
-      <Datetime {pubDatetime} {modDatetime} {timezone} size="lg" />
-      <span
-        aria-hidden="true"
-        class:list={[
-          "text-muted-foreground max-sm:hidden",
-          { hidden: !config.features.editPost?.enabled || hideEditPost },
-        ]}
-      >
-        |
-      </span>
-      <EditPost {hideEditPost} {post} class="max-sm:hidden" />
-    </div>
+      <aside class="pt-2 lg:pt-44">
+        <dl class="grid gap-7 text-sm">
+          <div>
+            <dt class="text-muted-foreground">Date</dt>
+            <dd class="mt-2">
+              <Datetime
+                {pubDatetime}
+                {modDatetime}
+                {timezone}
+                size="lg"
+                class="text-foreground"
+              />
+            </dd>
+          </div>
+          <div>
+            <dt class="text-muted-foreground">Collection</dt>
+            <dd class="decoration-border mt-2 underline underline-offset-4">
+              Hippocampus III
+            </dd>
+          </div>
+          <div>
+            <dt class="text-muted-foreground">Tags</dt>
+            <dd class="mt-3">
+              <ul class="flex flex-wrap gap-3">
+                {
+                  tags.map(tag => (
+                    <Tag tag={slugifyStr(tag)} tagName={tag} size="sm" />
+                  ))
+                }
+              </ul>
+            </dd>
+          </div>
+        </dl>
+      </aside>
+    </section>
 
     <article
       id="article"
       class:list={[
-        "mt-8 w-full",
-        "app-prose max-w-app",
+        "mx-auto mt-16 w-full max-w-3xl min-w-0 sm:mt-24",
+        "app-prose",
         "prose-pre:bg-(--shiki-light-bg) dark:prose-pre:bg-(--shiki-dark-bg)",
       ]}
     >
       <Content />
     </article>
 
-    <hr class="my-8 border-dashed" />
-
-    <EditPost class="sm:hidden" {hideEditPost} {post} />
-
     <BackToTopButton />
 
-    <ul class="mt-4 mb-8 flex flex-wrap gap-4 sm:my-8">
-      {tags.map(tag => <Tag tag={slugifyStr(tag)} tagName={tag} size="sm" />)}
-    </ul>
+    <div class="border-border mx-auto mt-12 max-w-3xl border-t pt-8">
+      <ShareLinks />
+    </div>
 
-    <ShareLinks />
-
-    <hr class="my-8 border-dashed" />
+    <hr class="border-border my-10" />
 
     <AdjacentPostNav {prevPost} {nextPost} />
   </main>
