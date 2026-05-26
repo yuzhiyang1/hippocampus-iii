@@ -5,6 +5,26 @@
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
 @layer base {
+  html {
+    background: var(--color-background);
+  }
+
+  body {
+    overflow-x: hidden;
+  }
+
+  p,
+  li {
+    overflow-wrap: anywhere;
+  }
+
+  @media (width < 40rem) {
+    p,
+    li {
+      word-break: break-all;
+    }
+  }
+
   * {
     @apply border-border outline-accent/75;
     scrollbar-width: auto;
@@ -21,15 +41,20 @@
 }
 
 @utility max-w-app {
-  @apply max-w-3xl;
+  @apply max-w-6xl;
 }
 
 @utility app-layout {
-  @apply max-w-app mx-auto w-full px-4;
+  @apply max-w-app mx-auto w-full px-5 sm:px-8;
 }
 
 @utility active-nav {
-  @apply underline decoration-wavy decoration-2 underline-offset-8;
+  @apply text-accent underline decoration-current decoration-1 underline-offset-8;
+}
+
+@utility font-editorial {
+  font-family: Georgia, "Times New Roman", "Noto Serif SC", serif;
+  overflow-wrap: anywhere;
 }
 
 :target {
