@@ -2,11 +2,12 @@ import { defineAstroPaperConfig } from "./src/types/config";
 
 export default defineAstroPaperConfig({
   site: {
-    url: "https://hippocampus-iii.pages.dev/",
+    // 正式访问域名，用于生成 canonical、OG、RSS 和 sitemap 链接。
+    url: "https://yuzhiy.cn/",
     title: "Hippocampus III",
     description: "我的第三个海马体，一个外置记忆与随想系统。",
     author: "yzy",
-    profile: "https://hippocampus-iii.pages.dev/about/",
+    profile: "https://yuzhiy.cn/about/",
     ogImage: "default-og.jpg",
     lang: "zh-CN",
     timezone: "Asia/Shanghai",
